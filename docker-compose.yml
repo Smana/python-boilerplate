@@ -1,0 +1,46 @@
+version: "3"
+networks:
+  ns:
+    driver: bridge
+
+services:
+  app: &app
+    build: .
+    volumes:
+      - .:/app
+    networks:
+      - ns
+
+  format-imports:
+    <<: *app
+    entrypoint: ["isort", "-y", "-rc", "myapp/.",  "tests/."]
+    networks:
+      - ns
+
+  check-format-imports:
+    <<: *app
+    entrypoint: ["isort", "-y", "--check-only", "-rc", "myapp/.",  "tests/."]
+    depends_on: []
+
+  format:
+    <<: *app
+    entrypoint: ["black", "-l", "79", "--py36", "myapp"]
+    networks:
+      - ns
+
+  check-format:
+    <<: *app
+    entrypoint: ["black", "-l", "79", "--py36", "--check", "myapp"]
+    depends_on: []
+
+  style:
+    <<: *app
+    entrypoint: ["pylint", "--reports=n", "myapp"]
+    depends_on: []
+
+  test-unit:
+    <<: *app
+    entrypoint: ["pytest", "tests"]
+    volumes:
+      - ./reports:/usr/src/app/reports
+    depends_on: []

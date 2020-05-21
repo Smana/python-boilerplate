@@ -1,0 +1,11 @@
+# Python
+__pycache__
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+.cache
+coverage.xml
+
+# Pytest cache
+.pytest_cache

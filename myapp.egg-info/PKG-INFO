@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: myapp
+Version: 0.0.1
+Summary: My Boilerplate structur
+Home-page: https://github.com/dailymotion/dragonstone
+Author: Smana
+Author-email: smainklh@gmail.com
+License: Apache 2.0
+Description: # My python boilerplate
+        
+Platform: UNKNOWN
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
