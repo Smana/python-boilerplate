@@ -6,7 +6,11 @@ COPY . /app
 RUN pip install --upgrade pip
 RUN pip install -e .
 
-EXPOSE 80
+
+RUN adduser -h /app -s /bin/false -DH smana \
+    && chown -R smana. /app
+
+USER smana
 
 ENV PYTHONUNBUFFERED 1
 ENTRYPOINT ["myapp"]
