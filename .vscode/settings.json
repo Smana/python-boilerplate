@@ -25,6 +25,6 @@
     "files.trimFinalNewlines": true,
     "breadcrumbs.enabled": true,
     "explorer.confirmDelete": false,
-    "python.pythonPath": "/home/smana/sources/virtualenvs/kubernetes/bin/python",
+    "python.pythonPath": ".venv/bin/python",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
 }

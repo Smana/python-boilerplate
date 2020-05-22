@@ -34,6 +34,12 @@ style: check-format
 	$(COMPOSE) run style
 
 
+.PHONY: complexity
+complexity:
+	$(COMPOSE) build complexity
+	$(COMPOSE) run complexity
+
+
 .PHONY: test-unit
 test-unit:
 	$(COMPOSE) build test-unit
