@@ -38,9 +38,14 @@ services:
     entrypoint: ["pylint", "--reports=n", "myapp"]
     depends_on: []
 
+  complexity:
+    <<: *app
+    entrypoint: ["xenon", "--max-absolute=B", "--max-modules=B", "--max-average=A", "myapp"]
+    depends_on: []
+
   test-unit:
     <<: *app
     entrypoint: ["pytest", "tests"]
     volumes:
-      - ./reports:/usr/src/app/reports
+      - ./reports:/app/reports
     depends_on: []

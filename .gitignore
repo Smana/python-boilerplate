@@ -1,5 +1,6 @@
 # Python
 __pycache__
+.venv
 
 # Unit test / coverage reports
 .coverage
@@ -11,7 +12,8 @@ coverage.xml
 reports/*
 !reports/.gitkeep
 
-# Pytest cache
+# Pytest
+.pylint.d/
 .pytest_cache
 
 # Distribution / packaging
