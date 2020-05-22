@@ -10,13 +10,13 @@ with open(
     path.join(path.abspath(path.dirname(__file__)), "README.md"),
     encoding="utf-8",
 ) as f:
-    long_description = f.read()
+    LONG_DESCRIPTION = f.read()
 
 setup(
     name="myapp",
     version="0.0.1",
     description="My Python Boilerplate",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     url="https://github.com/Smana/python-boilerplate",
     author="Smana",
