@@ -19,10 +19,16 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e .
+
+      - name: Install Trivy (Vulns scan)
+        run: |
+          export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+          wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
+          tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
 
       - name: Format
         run: black -l 79 --py36 --check myapp
@@ -43,3 +49,20 @@ jobs:
           repository: smana/python-boilerplate
           tag_with_ref: true
           tag_with_sha: true
+
+      - name: Cache Trivy reports
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-trivy-reports
+        with:
+          path: .trivycache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Trivy vulnerabilities scan
+        run: |
+          ./trivy --exit-code 0 --cache-dir .trivycache/ --severity HIGH --no-progress smana/python-boilerplate:sha-${GITHUB_SHA:0:7}
+          ./trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress smana/python-boilerplate:sha-${GITHUB_SHA:0:7}
